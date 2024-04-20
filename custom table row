@@ -1,0 +1,90 @@
+import React, { useMemo, useState } from 'react';
+import "./index.css";
+
+import { useTable } from "react-table";
+
+export const TableRow = ({ row ,groups, childData}) => {
+
+    const cols = React.useMemo(() => [
+        {id: "expander", },
+    {
+        Header: "id",
+        accessor: "id"
+      },
+      {
+        Header: "First Name",
+        accessor: "first_name"  
+      },
+      {
+        Header: "Last Name",
+        accessor: "last_name"  
+      },
+    
+    
+    {
+      Header: "Email",
+      accessor: "email"
+    },
+    {
+      Header: "Gender",
+      accessor: "gender"
+    }],[]);
+
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        rows,
+        prepareRow,
+        visibleColumns,
+      } = useTable(
+        {
+          columns: cols,
+          data:childData
+        }
+      );
+
+
+  const _row = (
+    <tr {...row.getRowProps()} className={row.isExpanded? "backgroundRed":""} >      
+    <td></td>  
+    {row.cells.map(cell => {
+      return (
+        <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+      )
+    })}
+  </tr>
+  )
+  if (row.isExpanded) {
+    return (
+      <>
+        {_row}
+       
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                <th></th>
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                ))}
+              </tr>
+            ))}
+        {rows.map((row, i) => {
+            prepareRow(row)
+            return (
+              <tr {...row.getRowProps()}>
+                 <td></td>
+                {row.cells.map(cell => {                   
+                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                })}
+              </tr>
+            )
+          })}
+      
+       
+      </>
+    );
+  }
+
+
+  return _row;
+}
