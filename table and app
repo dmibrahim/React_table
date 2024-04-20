@@ -1,0 +1,146 @@
+import React from "react";
+import Children  from "./Children.json";
+import { useTable, useExpanded } from "react-table";
+import DemoData from './DemoData.json';
+import { BsChevronRight } from "react-icons/bs";
+import { BsChevronDown } from "react-icons/bs";
+
+import "./index.css";
+import { Tab } from "bootstrap";
+import { TableRow } from "./TableRow";
+
+function Table({ columns: userColumns, data, chilData }) {
+    
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    visibleColumns,
+    state: { expanded }
+  } = useTable(
+    {
+      columns: userColumns,
+      data
+    },
+    useExpanded
+  );
+    return (
+      <div className="table-container">
+        <table {...getTableProps()}>
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                <th></th>
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+       {rows.map((row, i) => {
+        prepareRow(row)
+        return (
+          // Use a React.Fragment here so the table markup is still valid
+          <React.Fragment>
+             <TableRow row={row}  groups={headerGroups} childData={chilData}  />
+            
+          </React.Fragment>
+        )
+      })}
+  </tbody>
+        </table>
+      </div>
+  );
+}
+
+function App() {
+
+  const data1 = React.useMemo(() => Children, []);
+  const columns = React.useMemo(
+    () => [
+      {
+        // Build our expander column
+        id: "expander", // Make sure it has an ID
+        Header: ({ getToggleAllRowsExpandedProps, isAllRowsExpanded }) => (
+          <span {...getToggleAllRowsExpandedProps()}>
+            {isAllRowsExpanded ? "" : ""}
+          </span>
+        ),
+        Cell: ({ row }) => (
+          // Use Cell to render an expander for each row.
+          // We can use the getToggleRowExpandedProps prop-getter
+          // to build the expander.
+          <span {...row.getToggleRowExpandedProps( {tyle: {
+            // We can even use the row.depth property
+            // and paddingLeft to indicate the depth
+            // of the row
+            marginLeft: `${row.depth * 3}px`,
+          },})}>
+            {row.isExpanded ? <BsChevronDown  size={8} />: <BsChevronRight  size={8} /> }
+          </span>
+        )
+      },
+      // {
+      //   Header: "Name",
+      //   columns: [
+      //     {
+      //       Header: "id",
+      //       accessor: "id"
+      //     },
+      //     {
+      //       Header: "First Name",
+      //       accessor: "first_name"  
+      //     },
+      //     {
+      //       Header: "Last Name",
+      //       accessor: "last_name"  
+      //     }
+      //   ]
+      // },
+      {
+              Header: "id",
+              accessor: "id"
+            },
+            {
+              Header: "First Name",
+              accessor: "first_name"  
+            },
+            {
+              Header: "Last Name",
+              accessor: "last_name"  
+            },
+     
+     
+          {
+            Header: "Email",
+            accessor: "email"
+          },
+          {
+            Header: "Gender",
+            accessor: "gender"
+          },
+          
+     
+    ],
+    []
+  );
+
+  const data = React.useMemo(() => DemoData, []);
+
+
+
+  return (
+    <Table
+      columns={columns}
+      data={data}
+      chilData={data1}
+      
+      
+    />
+  );
+}
+
+export default App;
