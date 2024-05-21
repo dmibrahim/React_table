@@ -1,0 +1,9 @@
+public sealed class PlaywrightSingleton
+{
+    private static readonly Lazy<Playwright> lazyPlaywright =
+        new Lazy<Playwright>(() => Task.Run(async () => await Playwright.CreateAsync()).Result);
+
+    public static Playwright Instance => lazyPlaywright.Value;
+
+    private PlaywrightSingleton() { }
+}
