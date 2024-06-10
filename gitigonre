@@ -1,0 +1,111 @@
+# Compiled source files
+*.dll
+*.exe
+*.pdb
+*.nuget
+*.dbmdl
+*.log
+
+# Backup & log files
+*.bak
+*.log
+*.orig
+
+# DotNet artifacts
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# Microsoft Visual Studio
+.vs/
+.vscode/
+*.csproj.user
+*.user
+*.suo
+*.userosscache
+*.userprefs
+*.sln.docstates
+*.sln.ide
+*.vcxproj.*
+*.psess
+*.testsettings
+*.codeanalysis
+*.tfp
+
+# Rider
+.idea/
+*.sln.iml
+
+# Build directories
+bin/
+obj/
+Debug/
+Release/
+
+# NCrunch
+_ncrunch_*
+.*crunch*.local.xml
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# StyleCop
+StyleCopReport.xml
+
+# Client-side packages
+node_modules/
+bower_components/
+
+# Misc
+*.tmp
+*.temp
+*.nlog
+*.slog
+
+# macOS
+.DS_Store
+
+# Linux
+*.swp
+*~
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# JetBrains Rider
+.idea/
+
+# ReSharper
+_ReSharper*/
+*.ReSharper
+_ReSharper.Caches/
+
+# Coverlet Coverage Tool
+coverage*.json
+coverage*.xml
+coverage*.info
+
+# dotCover
+.dotCover
+
+# Cake
+tools/
+Addins/
+Modules/
+.cake
+.cake.*
+.cakebakery/
+
+# Client-side code
+client/dist/
+client/node_modules/
+client/bower_components/
+client/.pnp/
+client/pnp.js
