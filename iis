@@ -1,0 +1,59 @@
+Publishing a .NET Core 7 application to IIS involves several steps, including setting up the environment on the server, configuring the project, and deploying the application. Here’s a detailed guide to help you get started:
+
+### 1. Prerequisites
+Ensure that you have the following installed on your server:
+- **.NET Core 7 Runtime and Hosting Bundle:** This includes the .NET Core Runtime, the .NET Core Library, and the ASP.NET Core Module which is necessary for hosting ASP.NET Core applications on IIS.
+- **Internet Information Services (IIS):** IIS must be enabled and configured on the Windows server.
+- **Web Deploy (optional but recommended):** Helps to simplify the deployment of web applications.
+
+### 2. Prepare Your Application
+- **Configure the application for IIS:**
+  - In your project, ensure you have the `<AspNetCoreHostingModel>` property set to `InProcess` in your `.csproj` file for performance benefits.
+  ```xml
+  <PropertyGroup>
+      <TargetFramework>net7.0</TargetFramework>
+      <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+  ```
+
+- **Add IIS Integration:**
+  - Your `Program.cs` should call `.UseIISIntegration()` which configures the app to work behind IIS.
+  ```csharp
+  var builder = WebApplication.CreateBuilder(args);
+
+  builder.WebHost.UseIISIntegration();
+  ```
+
+### 3. Publish the Application
+- **Using Visual Studio:**
+  - Right-click the project in Solution Explorer and select Publish.
+  - Choose "IIS, FTP, etc." and set up the publish profile with your server's details.
+  - Click Publish to deploy the application.
+
+- **Using the CLI:**
+  - Run the following command in your project directory:
+  ```bash
+  dotnet publish -c Release -o ./publish
+  ```
+
+### 4. Configure IIS
+- **Create a new website or application pool:**
+  - Open IIS Manager, right-click on "Sites" and choose "Add Website."
+  - Give your site a name, set the physical path to the directory of your published application, and configure the bindings (e.g., HTTP/HTTPS, port).
+  - Create or assign an application pool. Ensure the application pool is set to "No Managed Code" since .NET Core handles the runtime.
+
+### 5. Set Folder Permissions
+- Ensure the application folder has the necessary permissions:
+  - Right-click on the published folder, go to Security, and ensure the IIS_IUSRS group has appropriate permissions.
+
+### 6. Configure the Web.Config File
+- When you publish your application, a `web.config` file is automatically generated. This file configures the ASP.NET Core Module and defines environment variables.
+- Verify or modify the `web.config` to suit any specific settings or environment variables needed for production.
+
+### 7. Test the Deployment
+- Open a web browser and navigate to your website using the configured URL. Check to ensure the application runs as expected.
+
+### 8. Troubleshooting
+- If you encounter issues, check the Windows Event Viewer and the application logs for errors. Common issues might involve configuration problems, missing permissions, or errors in the application code.
+
+Following these steps should help you successfully deploy a .NET Core 7 application on IIS. Adjustments might be necessary based on your specific requirements and environment.
