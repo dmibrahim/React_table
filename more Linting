@@ -24,6 +24,7 @@ module.exports = {
     'react-hooks',
     'jsx-a11y',
     'prettier',
+    'import',
   ],
   extends: [
     'eslint:recommended',
@@ -33,6 +34,9 @@ module.exports = {
     'plugin:testing-library/react',
     'plugin:unicorn/recommended',
     'plugin:prettier/recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:import/typescript',
   ],
   rules: {
     // Naming conventions
