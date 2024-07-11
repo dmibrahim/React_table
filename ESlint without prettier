@@ -1,0 +1,198 @@
+Certainly! Here’s how to configure your ESLint setup without Prettier.
+
+Updated .eslintrc.js
+Remove the Prettier-specific configuration and plugins from your .eslintrc.js:
+
+javascript
+Copy code
+module.exports = {
+  parser: '@babel/eslint-parser',
+  parserOptions: {
+    ecmaVersion: 2021,
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+  env: {
+    browser: true,
+    es2021: true,
+    node: true,
+  },
+  plugins: [
+    'jsx-control-statements',
+    'testing-library',
+    'unicorn',
+    'react',
+    'react-hooks',
+    'jsx-a11y',
+    'import',
+  ],
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:jsx-a11y/recommended',
+    'plugin:testing-library/react',
+    'plugin:unicorn/recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:import/typescript',
+  ],
+  rules: {
+    // Naming conventions
+    'unicorn/filename-case': [
+      'error',
+      {
+        cases: {
+          camelCase: true,
+          pascalCase: true,
+        },
+      },
+    ],
+
+    // Modern JavaScript syntax
+    'prefer-arrow-callback': 'error',
+    'prefer-const': 'error',
+    'no-var': 'error',
+    'object-shorthand': 'error',
+    'prefer-template': 'error',
+
+    // Proper ordering of imports
+    'import/order': [
+      'error',
+      {
+        groups: [['builtin', 'external', 'internal']],
+        'newlines-between': 'always',
+      },
+    ],
+
+    // Catch missing imports and prevent unused imports
+    'import/no-unresolved': 'error',
+    'import/no-extraneous-dependencies': 'error',
+    'import/no-unused-modules': [
+      'error',
+      {
+        unusedExports: true,
+      },
+    ],
+
+    // Prevent missing dependencies in useEffect or calling hooks conditionally
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
+
+    // Prevent unused state
+    'react/no-unused-state': 'warn',
+
+    // Prevent missing keys in lists
+    'react/jsx-key': 'error',
+
+    // Prevent incorrect lifecycle method usage
+    'react/no-deprecated': 'error',
+    'react/no-direct-mutation-state': 'error',
+    'react/no-typos': 'error',
+    'react/no-unsafe': [
+      'error',
+      {
+        checkAliases: true,
+      },
+    ],
+
+    // Additional rules for accessibility and best practices
+    'jsx-a11y/anchor-is-valid': 'warn',
+    'jsx-a11y/no-autofocus': 'warn',
+
+    // Additional unicorn rules
+    'unicorn/prevent-abbreviations': [
+      'error',
+      {
+        replacements: {
+          props: false,
+          ref: false,
+          err: false,
+        },
+      },
+    ],
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
+  },
+};
+package.json
+Ensure your package.json includes scripts for linting:
+
+json
+Copy code
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/eslint-parser": "^7.14.7",
+    "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-react": "^7.14.5",
+    "eslint": "^7.30.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-jsx-control-statements": "^2.2.2",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-testing-library": "^3.10.2",
+    "eslint-plugin-unicorn": "^34.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
+Running ESLint
+You can now run ESLint using the scripts defined in package.json.
+
+To lint your code:
+
+bash
+Copy code
+npm run lint
+To automatically fix fixable linting issues:
+
+bash
+Copy code
+npm run lint:fix
+By following these steps, you have a React application with ESLint configured to enforce various coding standards and best practices, without using Prettier.
