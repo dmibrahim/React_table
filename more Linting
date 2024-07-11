@@ -123,6 +123,20 @@ module.exports = {
     },
   },
 };
+
+package.json
+{
+  "scripts": {
+    "lint": "eslint ."
+  }
+}
+
+{
+  "scripts": {
+    "lint": "eslint . --fix"
+  }
+}
+
 This configuration uses the specified ESLint plugins and sets rules to:
 
 Enforce better naming conventions with eslint-plugin-unicorn.
