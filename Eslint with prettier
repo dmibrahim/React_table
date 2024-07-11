@@ -1,0 +1,186 @@
+Certainly! To include Prettier configurations, you can create a .prettierrc file in the root of your project with the specified configurations. Additionally, you need to make sure Prettier is integrated with ESLint. Here’s how to do it:
+
+Install Prettier and ESLint Prettier Plugin:
+Ensure you have Prettier and the ESLint Prettier plugin installed:
+
+bash
+Copy code
+npm install --save-dev prettier eslint-plugin-prettier eslint-config-prettier
+Create a .prettierrc file:
+In the root of your project, create a file named .prettierrc and add the following configurations:
+
+json
+Copy code
+{
+  "bracketSpacing": true,
+  "printWidth": 140,
+  "singleQuote": true,
+  "trailingComma": "none",
+  "tabWidth": 2,
+  "useTabs": false
+}
+Update .eslintrc.js:
+Ensure that the ESLint configuration file (.eslintrc.js) extends the Prettier configuration and uses the Prettier plugin. Here’s the updated version of .eslintrc.js:
+
+javascript
+Copy code
+module.exports = {
+  parser: '@babel/eslint-parser',
+  parserOptions: {
+    ecmaVersion: 2021,
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+  env: {
+    browser: true,
+    es2021: true,
+    node: true,
+  },
+  plugins: [
+    'jsx-control-statements',
+    'testing-library',
+    'unicorn',
+    'react',
+    'react-hooks',
+    'jsx-a11y',
+    'prettier',
+    'import',
+  ],
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:jsx-a11y/recommended',
+    'plugin:testing-library/react',
+    'plugin:unicorn/recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:import/typescript',
+    'plugin:prettier/recommended', // Make sure this is the last configuration in the extends array
+  ],
+  rules: {
+    // Naming conventions
+    'unicorn/filename-case': [
+      'error',
+      {
+        cases: {
+          camelCase: true,
+          pascalCase: true,
+        },
+      },
+    ],
+
+    // Modern JavaScript syntax
+    'prefer-arrow-callback': 'error',
+    'prefer-const': 'error',
+    'no-var': 'error',
+    'object-shorthand': 'error',
+    'prefer-template': 'error',
+
+    // Proper ordering of imports
+    'import/order': [
+      'error',
+      {
+        groups: [['builtin', 'external', 'internal']],
+        'newlines-between': 'always',
+      },
+    ],
+
+    // Catch missing imports and prevent unused imports
+    'import/no-unresolved': 'error',
+    'import/no-extraneous-dependencies': 'error',
+    'import/no-unused-modules': [
+      'error',
+      {
+        unusedExports: true,
+      },
+    ],
+
+    // Prevent missing dependencies in useEffect or calling hooks conditionally
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
+
+    // Prevent unused state
+    'react/no-unused-state': 'warn',
+
+    // Prevent missing keys in lists
+    'react/jsx-key': 'error',
+
+    // Prevent incorrect lifecycle method usage
+    'react/no-deprecated': 'error',
+    'react/no-direct-mutation-state': 'error',
+    'react/no-typos': 'error',
+    'react/no-unsafe': [
+      'error',
+      {
+        checkAliases: true,
+      },
+    ],
+
+    // Additional rules for accessibility and best practices
+    'jsx-a11y/anchor-is-valid': 'warn',
+    'jsx-a11y/no-autofocus': 'warn',
+
+    // Prettier integration
+    'prettier/prettier': 'error',
+
+    // Additional unicorn rules
+    'unicorn/prevent-abbreviations': [
+      'error',
+      {
+        replacements: {
+          props: false,
+          ref: false,
+          err: false,
+        },
+      },
+    ],
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
+  },
+};
+Add ESLint and Prettier scripts to package.json:
+Ensure your package.json includes scripts for linting and formatting:
+
+json
+Copy code
+{
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write ."
+  }
+}
+Run Prettier and ESLint:
+You can now run Prettier and ESLint using the scripts defined in package.json.
+
+To format your code with Prettier:
+
+bash
+Copy code
+npm run format
+To lint your code with ESLint:
+
+bash
+Copy code
+npm run lint
+To automatically fix fixable linting issues:
+
+bash
+Copy code
+npm run lint:fix
+By following these steps, you have integrated Prettier with custom configurations into your React project and ensured that it works seamlessly with ESLint.
