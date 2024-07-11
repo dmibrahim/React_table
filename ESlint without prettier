@@ -196,3 +196,23 @@ bash
 Copy code
 npm run lint:fix
 By following these steps, you have a React application with ESLint configured to enforce various coding standards and best practices, without using Prettier.
+
+
+
+import/order': [
+      'error',
+      {
+        groups: [
+          ['builtin', 'external'],
+          ['internal', 'parent', 'sibling', 'index'],
+        ],
+        'newlines-between': 'always',
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true,
+        },
+      },
+    ],
+
+ // Disable the specific rule
+    'import/no-named-as-default': 'off',
