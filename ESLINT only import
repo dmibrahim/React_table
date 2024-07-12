@@ -1,0 +1,88 @@
+Modify your .eslintrc.js to include all the plugins but turn off all their rules except for the ones from plugin:import:
+
+javascript
+Copy code
+module.exports = {
+  parser: '@babel/eslint-parser',
+  parserOptions: {
+    ecmaVersion: 2021,
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+  env: {
+    browser: true,
+    es2021: true,
+    node: true,
+  },
+  plugins: [
+    'jsx-control-statements',
+    'testing-library',
+    'unicorn',
+    'react',
+    'react-hooks',
+    'jsx-a11y',
+    'import',
+  ],
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:jsx-a11y/recommended',
+    'plugin:testing-library/react',
+    'plugin:unicorn/recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:import/typescript',
+  ],
+  rules: {
+    // Enable import rules only
+    'import/order': [
+      'error',
+      {
+        groups: [['builtin', 'external', 'internal']],
+        'newlines-between': 'always',
+      },
+    ],
+    'import/no-unresolved': 'error',
+    'import/no-extraneous-dependencies': 'error',
+    'import/no-unused-modules': [
+      'error',
+      {
+        unusedExports: true,
+      },
+    ],
+    // Disable all other rules
+    'jsx-control-statements/jsx-use-if-tag': 'off',
+    'testing-library/no-container': 'off',
+    'testing-library/no-node-access': 'off',
+    'unicorn/filename-case': 'off',
+    'prefer-arrow-callback': 'off',
+    'prefer-const': 'off',
+    'no-var': 'off',
+    'object-shorthand': 'off',
+    'prefer-template': 'off',
+    'react-hooks/rules-of-hooks': 'off',
+    'react-hooks/exhaustive-deps': 'off',
+    'react/no-unused-state': 'off',
+    'react/jsx-key': 'off',
+    'react/no-deprecated': 'off',
+    'react/no-direct-mutation-state': 'off',
+    'react/no-typos': 'off',
+    'react/no-unsafe': 'off',
+    'jsx-a11y/anchor-is-valid': 'off',
+    'jsx-a11y/no-autofocus': 'off',
+    'unicorn/prevent-abbreviations': 'off',
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
+  },
+};
