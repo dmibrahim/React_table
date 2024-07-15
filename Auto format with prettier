@@ -95,3 +95,7 @@ JSON FORMAT (.prettierrc.json)
   "endOfLine": "lf",
   "embeddedLanguageFormatting": "auto"
 }
+
+
+"format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
+    "lint-and-format": "npm run lint -- --fix && npm run format"
