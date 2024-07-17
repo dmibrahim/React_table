@@ -1,0 +1,5 @@
+npm install eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin
+
+parser: '@typescript-eslint/parser', // Specifies the ESLint parser
+
+ 'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
