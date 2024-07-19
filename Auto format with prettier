@@ -6,7 +6,10 @@
         ]
 
 
-
+'@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
 
 
 To run ESLint and apply Prettier formatting automatically, you can set up scripts in your package.json and use tools like husky and lint-staged to ensure that code is linted and formatted before commits
