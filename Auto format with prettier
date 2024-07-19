@@ -1,3 +1,14 @@
+
+"@typescript-eslint/ts-nocheck": "off", // Disable error for @ts-nocheck comments
+        "no-warning-comments": [
+            "warn",
+            { "terms": ["eslint-disable-next-line"], "location": "start" } // Handle eslint-disable-next-line comments
+        ]
+
+
+
+
+
 To run ESLint and apply Prettier formatting automatically, you can set up scripts in your package.json and use tools like husky and lint-staged to ensure that code is linted and formatted before commits
 
 module.exports = {
