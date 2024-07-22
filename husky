@@ -1,0 +1,29 @@
+In the context of a React project, Husky is a tool used to manage Git hooks easily. Git hooks are scripts that are executed automatically at certain points in the Git workflow, such as before making a commit or pushing changes. Husky simplifies the process of setting up and managing these hooks, allowing developers to automate tasks such as code linting, running tests, or formatting code before commits.
+
+  npm install husky --save-dev
+
+  Add Hooks:
+You can now add hooks. For example, to run a lint check before every commit, you can create a pre-commit hook.
+
+sh
+Copy code
+npx husky add .husky/pre-commit "npm run lint"
+
+Commit Linting:
+To lint commit messages, you can use a tool like commitlint along with Husky. First, install commitlint and a configuration package:
+
+sh
+Copy code
+npm install @commitlint/config-conventional @commitlint/cli --save-dev
+Then, create a commitlint.config.js file:
+
+Then, create a commitlint.config.js file:
+
+js
+Copy code
+module.exports = { extends: ['@commitlint/config-conventional'] };
+Next, add a commit-msg hook:
+
+sh
+Copy code
+npx husky add .husky/commit-msg 'npx --no-install commitlint --edit "$1"'
