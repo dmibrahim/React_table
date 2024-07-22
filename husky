@@ -10,6 +10,18 @@ Copy code
 npx husky install
 This will create a .husky directory in your project root.
 
+You can enable Husky to use Git hooks by adding a script to your package.json file. Add the following to the scripts section of your package.json:
+
+json
+Copy code
+"scripts": {
+  "prepare": "husky install"
+}
+After adding this script, run the following command to set up Husky:
+
+sh
+Copy code
+npm run prepare
 
 
 Add Hooks:
