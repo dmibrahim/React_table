@@ -50,3 +50,10 @@ Next, add a commit-msg hook:
 sh
 Copy code
 npx husky add .husky/commit-msg 'npx --no-install commitlint --edit "$1"'
+
+
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npm run lint
+npm test
