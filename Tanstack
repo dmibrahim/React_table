@@ -1,0 +1,11 @@
+React Table
+Original Library: React Table was one of the earlier popular solutions for creating tables in React. It provided a flexible and customizable way to handle data grids and tables, with support for features like pagination, sorting, filtering, and more.
+
+TanStack Table
+Rebranding and Evolution: TanStack Table is essentially the evolution of React Table. The creators decided to rebrand and expand the scope of the library to align with the broader TanStack collection of tools, which includes libraries for state management, queries, and more.
+
+Enhanced Features: TanStack Table comes with a more modern and flexible API, making it easier to extend and customize. It supports more advanced features like virtualization (for handling large datasets more efficiently), better type support (especially with TypeScript), and a more modular architecture.
+
+Part of TanStack Ecosystem: As part of the TanStack ecosystem, it integrates well with other tools from the same collection, like TanStack Query (for data fetching), making it easier to build cohesive applications.
+
+For advanced features like virtualization or better TypeScript support, TanStack Table is the way to go. It’s more future-proof and comes with enhancements that make working with tables in React more powerful and flexible.
