@@ -9,3 +9,144 @@ Enhanced Features: TanStack Table comes with a more modern and flexible API, mak
 Part of TanStack Ecosystem: As part of the TanStack ecosystem, it integrates well with other tools from the same collection, like TanStack Query (for data fetching), making it easier to build cohesive applications.
 
 For advanced features like virtualization or better TypeScript support, TanStack Table is the way to go. It’s more future-proof and comes with enhancements that make working with tables in React more powerful and flexible.
+
+
+
+
+
+ return (
+    <table style={{ border: 'solid 1px blue' }}>
+      <thead>
+        {table.getHeaderGroups().map(headerGroup => (
+          <tr key={headerGroup.id}>
+            {headerGroup.headers.map(header => (
+              <th
+                key={header.id}
+                style={{
+                  borderBottom: 'solid 3px red',
+                  background: 'aliceblue',
+                  color: 'black',
+                  fontWeight: 'bold',
+                }}
+              >
+                {header.isPlaceholder
+                  ? null
+                  : flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+              </th>
+            ))}
+          </tr>
+        ))}
+      </thead>
+      <tbody>
+        {table.getRowModel().rows.map(row => (
+          <tr key={row.id}>
+            {row.getVisibleCells().map(cell => (
+              <td
+                key={cell.id}
+                style={{
+                  padding: '10px',
+                  border: 'solid 1px gray',
+                  background: 'papayawhip',
+                }}
+              >
+                {flexRender(
+                  cell.column.columnDef.cell,
+                  cell.getContext()
+                )}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
+export default TanStackTableExample;
+Note: The above example assumes you have imported getCoreRowModel and getSortedRowModel. Let's include them:
+
+javascript
+Copy code
+import {
+  useReactTable,
+  getCoreRowModel,
+  getSortedRowModel,
+  ColumnDef,
+  flexRender,
+} from '@tanstack/react-table';
+Adjust the useTable hook to useReactTable:
+
+javascript
+Copy code
+const table = useReactTable({
+  data,
+  columns,
+  getCoreRowModel: getCoreRowModel(),
+  getSortedRowModel: getSortedRowModel(),
+  // Add other plugins as needed
+});
+Use the Table Component:
+
+Include the TanStackTableExample component in your application:
+
+javascript
+Copy code
+import React from 'react';
+import TanStackTableExample from './TanStackTableExample';
+
+function App() {
+  return (
+    <div>
+      <h1>TanStack Table v8 Example</h1>
+      <TanStackTableExample />
+    </div>
+  );
+}
+
+export default App;
+This setup will render a basic table using TanStack Table v8. To add sorting functionality, you'd need to include additional logic and possibly state management, which is more modular in v8.
+
+Key Differences
+While both React Table v7 and TanStack Table v8 serve the purpose of creating highly customizable tables in React, there are several key differences between them:
+
+Library Evolution:
+
+React Table v7: The last version under the name "React Table". It was primarily designed for React and uses hooks extensively.
+TanStack Table v8: The successor to React Table, rebranded to support multiple frameworks (React, Vue, Svelte, Solid, etc.). It introduces a more modular and flexible API.
+API Changes:
+
+Column Definitions:
+v7: Columns are defined with Header and accessor.
+v8: Columns use header and accessorKey (or accessorFn), providing better type safety and flexibility.
+Rendering:
+v7: Uses column.render('Header') and cell.render('Cell').
+v8: Utilizes flexRender for rendering headers and cells, which allows for more flexibility in rendering logic.
+Hook Names:
+v7: Uses useTable hook.
+v8: Uses useReactTable hook (or corresponding hooks for other frameworks).
+Plugin Architecture:
+
+v7: Plugins are added by composing hooks, e.g., useSortBy, usePagination.
+v8: Features are added via the useReactTable configuration by specifying which row models and state to include, making it more explicit and modular.
+Performance and Features:
+
+v8: Offers improved performance, better support for virtualized rendering, and more advanced features out-of-the-box compared to v7.
+TypeScript Support:
+
+v8: Enhanced TypeScript support with better type inference and safety.
+Documentation and Community:
+
+v8: Being the latest version, it has updated documentation and is the focus of ongoing community support and improvements.
+Conclusion
+Both React Table v7 and TanStack Table v8 are powerful tools for creating customizable tables in React applications. However, TanStack Table v8 offers a more modern, flexible, and modular approach, along with enhanced performance and multi-framework support. If you're starting a new project or looking to upgrade, TanStack Table v8 is the recommended choice.
+
+That said, if you're maintaining an existing project that uses React Table v7, it might be beneficial to consider upgrading to TanStack Table v8 to take advantage of the latest features and improvements.
+
+
+
+
+
+
