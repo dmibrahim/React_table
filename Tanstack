@@ -148,5 +148,38 @@ That said, if you're maintaining an existing project that uses React Table v7, i
 
 
 
+const columns = React.useMemo(
+  () => [
+    {
+      Header: 'Name',
+      accessor: 'name', // accessor is the "key" in the data
+    },
+    {
+      Header: 'Age',
+      accessor: 'age',
+    },
+    {
+      Header: 'Email',
+      accessor: 'email',
+    },
+  ],
+  []
+);
 
+const data = React.useMemo(
+  () => [
+    {
+      name: 'John Doe',
+      age: 28,
+      email: 'john.doe@example.com',
+    },
+    {
+      name: 'Jane Smith',
+      age: 34,
+      email: 'jane.smith@example.com',
+    },
+    // Add more data as needed
+  ],
+  []
+);
 
