@@ -183,3 +183,185 @@ const data = React.useMemo(
   []
 );
 
+
+Comprehensive TableOptions for useReactTable
+data: TData[]
+
+The array of data objects that your table will display.
+columns: ColumnDef<TData, TValue>[]
+
+The array of column definitions that define the structure and behavior of your table.
+state: Partial<TableState>
+
+The initial or controlled state of the table, allowing for external control of the table's internal state.
+onStateChange: (updater: Updater<TableState>) => void
+
+A callback function that is triggered whenever the table state changes.
+defaultColumn: Partial<ColumnDef<TData, TValue>>
+
+Default properties for all columns, which can be overridden by individual column definitions.
+getCoreRowModel: () => RowModel<TData>
+
+A function to define how to get the core row model, typically using the provided getCoreRowModel function from TanStack Table.
+getSubRows: (originalRow: TData, index: number) => TData[]
+
+A function to retrieve sub-rows for expandable rows.
+getRowId: (originalRow: TData, index: number, parent?: Row<TData>) => string
+
+A function to generate a unique ID for each row in the table.
+getSortedRowModel: () => RowModel<TData>
+
+A function to retrieve the sorted row model, typically using the provided getSortedRowModel function.
+getFilteredRowModel: () => RowModel<TData>
+
+A function to retrieve the filtered row model, typically using the provided getFilteredRowModel function.
+getPaginationRowModel: () => RowModel<TData>
+
+A function to retrieve the paginated row model, typically using the provided getPaginationRowModel function.
+getExpandedRowModel: () => RowModel<TData>
+
+A function to retrieve the expanded row model, typically using the provided getExpandedRowModel function.
+filterFns: Record<string, FilterFn<TData>>
+
+A map of custom filter functions that can be used to apply specific filtering logic.
+globalFilterFn: FilterFn<TData>
+
+A function to define the global filtering logic for the table.
+manualSorting: boolean
+
+Disables automatic sorting, allowing you to handle sorting logic manually.
+manualFiltering: boolean
+
+Disables automatic filtering, allowing you to handle filtering logic manually.
+manualPagination: boolean
+
+Disables automatic pagination, allowing you to handle pagination logic manually.
+manualExpanding: boolean
+
+Disables automatic expanding, allowing you to handle row expanding logic manually.
+autoResetAll: boolean
+
+Automatically resets all table state (sorting, filtering, etc.) when the table’s data changes.
+autoResetPageIndex: boolean
+
+Automatically resets the page index when the table’s data or any major table state changes.
+autoResetExpanded: boolean
+
+Automatically resets the expanded state when the table’s data or any major table state changes.
+autoResetFilters: boolean
+
+Automatically resets the filter state when the table’s data or any major table state changes.
+autoResetSortBy: boolean
+
+Automatically resets the sorting state when the table’s data or any major table state changes.
+autoResetGroupBy: boolean
+
+Automatically resets the grouping state when the table’s data or any major table state changes.
+autoResetRowSelection: boolean
+
+Automatically resets the row selection state when the table’s data or any major table state changes.
+autoResetGlobalFilter: boolean
+
+Automatically resets the global filter state when the table’s data or any major table state changes.
+enableSorting: boolean
+
+Globally enables or disables sorting.
+enableMultiSort: boolean
+
+Allows sorting on multiple columns.
+enableFilters: boolean
+
+Globally enables or disables filtering.
+enableGlobalFilter: boolean
+
+Globally enables or disables the global filter.
+enablePagination: boolean
+
+Globally enables or disables pagination.
+enableGrouping: boolean
+
+Globally enables or disables grouping.
+enableRowSelection: boolean
+
+Globally enables or disables row selection.
+enableSubRowSelection: boolean
+
+Allows row selection to work on sub-rows.
+enableColumnResizing: boolean
+
+Enables or disables column resizing.
+enableColumnFilters: boolean
+
+Enables or disables column-specific filtering.
+enableColumnOrdering: boolean
+
+Enables or disables column ordering (drag-and-drop).
+expandSubRows: boolean
+
+Automatically expands sub-rows when a parent row is expanded.
+pageCount: number
+
+When using manual pagination, this option defines the total number of pages.
+debugTable: boolean
+
+Enables debugging logs for the table.
+debugHeaders: boolean
+
+Enables debugging logs for the table headers.
+debugColumns: boolean
+
+Enables debugging logs for the table columns.
+debugRows: boolean
+
+Enables debugging logs for the table rows.
+Example Usage
+Here’s how you might use some of these options in a useReactTable hook:
+
+typescript
+Copy code
+import { useReactTable, ColumnDef, getCoreRowModel, getSortedRowModel, getPaginationRowModel } from '@tanstack/react-table';
+
+type Person = {
+  firstName: string;
+  lastName: string;
+  age: number;
+};
+
+const columns: ColumnDef<Person>[] = [
+  {
+    header: 'First Name',
+    accessorKey: 'firstName',
+  },
+  {
+    header: 'Last Name',
+    accessorKey: 'lastName',
+  },
+  {
+    header: 'Age',
+    accessorKey: 'age',
+  },
+];
+
+const data: Person[] = [
+  { firstName: 'John', lastName: 'Doe', age: 30 },
+  { firstName: 'Jane', lastName: 'Smith', age: 25 },
+];
+
+function MyTable() {
+  const table = useReactTable<Person>({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    manualSorting: true,
+    manualPagination: true,
+    debugTable: true,
+    enableSorting: true,
+    enablePagination: true,
+  });
+
+  return (
+    // Render the table UI
+  );
+}
