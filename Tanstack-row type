@@ -9,3 +9,87 @@
           </tr>
         ))}
       </tbody>
+
+
+import {
+  Row,
+  Cell,
+} from '@tanstack/react-table';
+
+type DataType = {
+  id: number;
+  name: string;
+  age: number;
+};
+
+interface RowType extends Row<DataType> {
+  id: string;
+  index: number;
+  original: DataType;
+  depth: number;
+  subRows: RowType[];
+  parentRow?: RowType;
+  getValue: (columnId: string) => any;
+  getVisibleCells: () => Cell<DataType, unknown>[];
+  getIsSelected: () => boolean;
+  getCanExpand: () => boolean;
+  getToggleExpandedHandler: () => () => void;
+  getIsExpanded: () => boolean;
+  getRowProps: () => object;
+  columnId: string;
+  // Additional custom properties or methods can be added here
+  customProperty?: string;
+  customMethod?: () => void;
+}
+Explanation of Each Property in RowType:
+id: string
+
+A unique identifier for the row.
+index: number
+
+The index of the row in the original data array.
+original: DataType
+
+The original data object corresponding to this row.
+depth: number
+
+The depth level of the row, useful for hierarchical data (e.g., tree tables).
+subRows: RowType[]
+
+An array of child rows, if the data is hierarchical.
+parentRow?: RowType
+
+A reference to the parent row, if applicable.
+getValue(columnId: string): any
+
+A method to get the value of a specific column in the row.
+getVisibleCells(): Cell<DataType, unknown>[]
+
+A method that returns an array of visible cells in this row.
+getIsSelected(): boolean
+
+Returns whether the row is selected.
+getCanExpand(): boolean
+
+Returns whether the row can be expanded (in the case of hierarchical data).
+getToggleExpandedHandler(): () => void
+
+Returns a function to toggle the expanded state of the row.
+getIsExpanded(): boolean
+
+Returns whether the row is expanded.
+getRowProps(): object
+
+Returns props to be spread onto the row element.
+columnId: string
+
+A unique identifier for a column, which can be used with the getValue method.
+Adding Custom Properties or Methods
+If you have any custom logic or additional data that you want to associate with each row, you can extend this RowType interface with additional properties or methods, like so:
+
+typescript
+Copy code
+interface RowType extends Row<DataType> {
+  customProperty?: string;
+  customMethod?: () => void;
+}
