@@ -69,3 +69,173 @@ const PaginatedTable = ({ columns, data }) => {
 };
 
 export default PaginatedTable;
+
+
+
+
+You're correct that in the latest version of TanStack Table (v8+), useTable and other hooks like usePagination have been removed or replaced by a more flexible and powerful API. Here's how you can implement pagination using the new TanStack Table (v8+).
+
+Steps to Implement Pagination in TanStack Table (v8+)
+Install TanStack Table:
+
+Make sure you have the latest version of TanStack Table installed:
+
+bash
+Copy code
+npm install @tanstack/react-table
+Set Up Your Table with Pagination:
+
+Here's how you can implement a basic paginated table using the new TanStack Table API:
+
+jsx
+Copy code
+import React, { useState, useMemo } from 'react';
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
+
+const columnHelper = createColumnHelper();
+
+const MyTable = ({ data }) => {
+  const columns = useMemo(
+    () => [
+      columnHelper.accessor('id', {
+        header: 'ID',
+        cell: info => info.getValue(),
+      }),
+      columnHelper.accessor('name', {
+        header: 'Name',
+        cell: info => info.getValue(),
+      }),
+      columnHelper.accessor('age', {
+        header: 'Age',
+        cell: info => info.getValue(),
+      }),
+    ],
+    []
+  );
+
+  const [pageSize, setPageSize] = useState(10);
+  const [pageIndex, setPageIndex] = useState(0);
+
+  const table = useReactTable({
+    data,
+    columns,
+    pageCount: Math.ceil(data.length / pageSize), // You can adjust this if you're getting paginated data from a server
+    state: {
+      pagination: {
+        pageIndex,
+        pageSize,
+      },
+    },
+    onPaginationChange: updater => {
+      const newState = updater instanceof Function ? updater(table.getState().pagination) : updater;
+      setPageIndex(newState.pageIndex);
+      setPageSize(newState.pageSize);
+    },
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+  });
+
+  return (
+    <>
+      <table>
+        <thead>
+          {table.getHeaderGroups().map(headerGroup => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map(header => (
+                <th key={header.id}>
+                  {flexRender(header.column.columnDef.header, header.getContext())}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map(row => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map(cell => (
+                <td key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div className="pagination">
+        <button
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          Previous
+        </button>
+        <button
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          Next
+        </button>
+
+        <span>
+          Page {table.getState().pagination.pageIndex + 1} of{' '}
+          {table.getPageCount()}
+        </span>
+        <span>
+          | Go to page:{' '}
+          <input
+            type="number"
+            defaultValue={table.getState().pagination.pageIndex + 1}
+            onChange={e => {
+              const page = e.target.value ? Number(e.target.value) - 1 : 0;
+              table.setPageIndex(page);
+            }}
+            style={{ width: '50px' }}
+          />
+        </span>
+        <select
+          value={table.getState().pagination.pageSize}
+          onChange={e => {
+            table.setPageSize(Number(e.target.value));
+          }}
+        >
+          {[10, 20, 30, 40, 50].map(pageSize => (
+            <option key={pageSize} value={pageSize}>
+              Show {pageSize}
+            </option>
+          ))}
+        </select>
+      </div>
+    </>
+  );
+};
+
+export default MyTable;
+Explanation:
+State Management:
+
+We use useState to manage pagination state (pageIndex and pageSize).
+The pagination state is then passed to useReactTable to handle the table's pagination.
+Columns:
+
+The columnHelper.accessor creates columns for the table. We use memoization (useMemo) to optimize the performance.
+useReactTable Configuration:
+
+data: The data to display in the table.
+columns: Column definitions.
+getCoreRowModel(): A helper for rendering the core row model.
+getPaginationRowModel(): A helper for pagination, which returns the paginated rows.
+Pagination Controls:
+
+Buttons are provided for navigating pages (Previous, Next).
+The page index can be directly input by the user.
+A dropdown is provided to select the number of rows per page.
+Pagination Logic:
+
+pageIndex and pageSize are used to determine the current page and how many rows to show per page.
+The pagination controls call functions like table.nextPage(), table.previousPage(), table.setPageIndex(), and table.setPageSize() to update the state.
