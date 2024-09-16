@@ -1,0 +1,46 @@
+TanStack Query is a powerful data-fetching library that helps developers manage server-side data-fetching and state synchronization in web applications. It’s part of the TanStack family (which also includes TanStack Table, TanStack Router, etc.) and is widely used in React applications (React Query) for optimizing API interactions and caching data.
+
+Here are some important features of TanStack Query (also known as React Query for React users):
+
+1. Data Fetching
+Fetches data asynchronously from APIs and services.
+Automatically caches fetched data to reduce redundant network requests.
+2. Caching
+Provides intelligent caching with expiration times and cache invalidation.
+Fetches fresh data only when needed, leveraging cached responses when applicable.
+3. Auto-Refetching
+Automatically refetches data based on configurable conditions like focus (e.g., when the window regains focus) and network status (e.g., when a user’s connection is restored).
+4. Error Handling
+Easily handles and tracks errors during data fetching.
+Retries failed requests with configurable retry logic.
+5. Background Fetching & Synchronization
+Keeps data synchronized by fetching in the background, updating only the necessary parts.
+Provides controls like manual invalidation or refetching for real-time synchronization.
+6. DevTools Integration
+Offers a devtools package to debug query states, cache data, and more, in a user-friendly interface.
+7. Automatic Garbage Collection
+Automatically removes unused queries and data from memory when they are no longer needed.
+8. Pagination & Infinite Queries
+Handles large datasets through pagination and infinite scroll implementations with ease.
+Example of TanStack Query in React:
+javascript
+Copy code
+import { useQuery } from '@tanstack/react-query';
+
+function fetchUserData() {
+  return fetch('/api/user').then((res) => res.json());
+}
+
+function UserProfile() {
+  const { data, error, isLoading } = useQuery(['user'], fetchUserData);
+
+  if (isLoading) return 'Loading...';
+  if (error) return 'An error occurred';
+
+  return (
+    <div>
+      <h1>{data.name}</h1>
+      <p>{data.email}</p>
+    </div>
+  );
+}
