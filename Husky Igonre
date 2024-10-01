@@ -36,3 +36,32 @@ echo "$STAGED_FILES" | xargs npx prettier --write
 
 # Add fixed files back to staging
 echo "$STAGED_FILES" | xargs git add
+
+
+# Ignore build directories
+dist/
+build/
+
+# Ignore dependency directory
+node_modules/
+
+# Ignore Husky hooks directory
+.husky/
+
+# Ignore environment configuration files
+.env
+.env.*  # For environment files like .env.local, .env.production
+
+# Ignore public folder (if applicable in a frontend project)
+public/
+
+# Ignore compiled or transpiled files (for TypeScript projects)
+*.tsbuildinfo
+
+# Ignore lock files and package manager files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Ignore any log files
+*.log
