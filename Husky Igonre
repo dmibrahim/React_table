@@ -1,6 +1,6 @@
 Add this in package.json
 
-
+npx husky add .husky/pre-commit 'IGNORE_FILES="node_modules/*,dist/*,*.test.js" && eslint . --fix --ignore-pattern "$IGNORE_FILES"'
 "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
